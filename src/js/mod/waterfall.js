@@ -12,7 +12,7 @@ WaterFall.prototype.init = function() {
     })
 }
 WaterFall.prototype.render = function() {
-    var _this = this
+    var self = this
     this.colSumHeight = []
     this.ctWidth = this.$ct.width()
     this.nodeWidth = this.$nodes.outerWidth(true)
@@ -21,7 +21,7 @@ WaterFall.prototype.render = function() {
         this.colSumHeight.push(0)
     }
     this.$nodes.each(function() {
-        _this.putNode($(this))
+        self.putNode($(this))
     })
 }
 WaterFall.prototype.putNode = function($node) {
