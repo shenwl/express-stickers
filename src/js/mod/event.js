@@ -1,23 +1,27 @@
 var EventCenter =  (function() {
-    var events = {}
+    var eventPool = {}
     function on(evt, handler) {
-        events[evt] = events[evt] || []
+        eventPool[evt] = eventPool[evt] || []
 
-        events[evt].push({
+        eventPool[evt].push({
             handler: handler
         })
     }
     function fire(evt, args) {
-       if(!events[evt]) {
+       if(!eventPool[evt]) {
            return
        }
-       for(var i=0; i<events[evt].length; i++) {
-          events[evt][i].handler(args)
+       for(var i=0; i<eventPool[evt].length; i++) {
+          eventPool[evt][i].handler(args)
        }
+    }
+    function off(evt) {
+        delete eventPool[evt]
     }
     return {
         on: on,
-        fire: fire
+        fire: fire,
+        off: off
     }
 })()
 

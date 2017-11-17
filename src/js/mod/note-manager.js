@@ -28,7 +28,6 @@ var NoteManager = (function() {
         new Note()
     }
     
-
     return {
         load: load,
         add: add
