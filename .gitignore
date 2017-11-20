@@ -1,2 +1,5 @@
 # 依赖模块
 node_modules/
+
+# db_config
+model/config.js

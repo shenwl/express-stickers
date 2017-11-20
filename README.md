@@ -3,6 +3,11 @@
 
 - Express
 
-- webpack
+- webpack, npm scripts
 
 - ejs
+
+- less
+
+- Sequelize, mysql2
+

@@ -2,13 +2,13 @@ require('less/note.less')
 
 var Toast = require('./toast.js').Toast
 var Event = require('mod/event.js')
-var NoteManager = require('mod/note-manager.js')
 
 function Note(opts) {
     this.initOpts(opts)
     this.createNote()
-    this.setLayout()
     this.bindEvent()
+    this.setLayout()
+ 
 }
 Note.prototype = {
     //设置不同的noteHead，noteCt颜色
@@ -19,22 +19,23 @@ Note.prototype = {
         context: '在此输入'
     },
     initOpts: function(opts) {
-        this.opts = $.extend({}, this.defaultOpts, opts || {})
+        var self = this
+        this.opts = $.extend({}, self.defaultOpts, opts || {})
         if(this.opts.id) {
-            this.id = this.opts.id
+            self.id = self.opts.id
         }
     },
     createNote: function() {
         var tpl = '<div class="note">' +
                     '<div class="note-header">' +
-                        '<span class="delete-note">X</span>'
+                        '<span class="delete-note">X</span>' +
                     '</div>' +
-                    '<div class="note-ct" contentEditable="true">' + 
-                    '</div>' + 
+                    '<div class="note-ct" contentEditable="true"></div>' + 
                   '</div>'
+
         this.$note = $(tpl)
         this.$note.find('.note-ct').html(this.opts.context)
-        this.opts.$ct.append(this.$node)
+        this.opts.$ct.append(this.$note)
         if(!this.id) {
             this.$note.css('bottom', '10px')
         }
@@ -53,7 +54,7 @@ Note.prototype = {
     },
     bindEvent: function() {
         var self = this
-        $note = this.$note
+        $note = self.$note
         $noteHead = $note.find('.note-head')
         $noteCt = $note.find('.note-ct')
         $deleteBtn = $note.find('.delete-note')
@@ -63,18 +64,18 @@ Note.prototype = {
         })
         //contenteditable没有change事件，只能模拟判断元素内容变动，执行save
         $noteCt.on('focus', function() {
-            if($noteCt.html() == '在此输入') {
-                $noteCt.html('')
+            if($(this).html() == '在此输入') {
+                $(this).html('')
             }
-            $noteCt.data('before', $noteCt.html())
+            $(this).data('before', $(this).html())
         }).on('blur paste', function() {
-            if($noteCt.data('before') != $noteCt.html()) {
-                $noteCt.data('before', $noteCt.html())
+            if($(this).data('before') != $(this).html()) {
+                $(this).data('before', $(this).html())
                 self.setLayout()
                 if(self.id) {
-                    self.edit($noteCt.html())
+                    self.edit($(this).html())
                 }else {
-                    self.add($noteCt.html())
+                    self.add($(this).html())
                 }
             }
         })

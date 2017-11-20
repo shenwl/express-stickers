@@ -6,14 +6,11 @@ var Toast = require('mod/toast.js').Toast
 var Event = require('mod/event.js')
 var Note = require('mod/note.js').Note
 
-console.log(NoteManager)
-// NoteManager.load()
+NoteManager.load()
 $('#add-note').on('click', function() {
    NoteManager.add()
 })
 
 Event.on('waterfall', function() {
-    new WaterFall($('#content'))
+    new WaterFall($('#wall'))
 })
-
-Toast('helloworld')
