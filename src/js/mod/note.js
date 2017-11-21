@@ -37,11 +37,8 @@ Note.prototype = {
         this.$note.find('.note-ct').html(this.opts.context)
         this.opts.$ct.append(this.$note)
         if(!this.id) {
-            this.$note.css('bottom', '10px')
+            this.$note.css('top', '10px')
         }
-    },
-    setStyle: function() {
-  
     },
     setLayout: function() {
         var self = this
@@ -54,7 +51,7 @@ Note.prototype = {
     },
     bindEvent: function() {
         var self = this
-        $note = self.$note
+        $note = this.$note
         $noteHead = $note.find('.note-head')
         $noteCt = $note.find('.note-ct')
         $deleteBtn = $note.find('.delete-note')
@@ -82,6 +79,9 @@ Note.prototype = {
 
         //设置note移动
         $noteHead.on('mousedown', function(e) {
+            //bug：没有这行的话拖动永远作用在最后创建的note上
+            $note = $(this).parent('.note')
+
             var evtX = e.pageX - $note.offset().left
             var evtY = e.pageY - $note.offset().top
             $note.addClass('draggable').data('evtPos', {x: evtX, y: evtY})
@@ -103,7 +103,7 @@ Note.prototype = {
             note: msg
         }).done(function(result) {
             if(result.status === 0) {
-                console.log('update success')
+                Toast('编辑成功')
             }else {
                 console.log(result.errorMsg)
             }
@@ -116,7 +116,7 @@ Note.prototype = {
         }).done(function(result) {
             if(result.status === 0) {
                 self.id = result.data.id
-                Toast('add success')
+                Toast('添加成功')
             }else {
                 Toast(result.errorMsg)
             }
@@ -128,7 +128,7 @@ Note.prototype = {
             id: this.id
         }).done(function(result) {
             if(result.status === 0) {
-                Toast('delete success')
+                Toast('删除成功')
                 self.$note.remove()
                 Event.fire('waterfall')
             }else {

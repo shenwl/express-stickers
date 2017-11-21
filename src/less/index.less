@@ -10,6 +10,9 @@ ul, li {
 a {
     text-decoration: none;
     color: inherit;
+    &:hover {
+        opacity: 0.5;
+    }
 }
 // index
 #header {
@@ -21,23 +24,25 @@ a {
     align-items: center;
     justify-content: space-between;
     min-height: 40px;
-    background-color: #ccc;
+    background-color: gray;
     color: #fff;
-    a {
+    #add-note {
         margin-left: 30px;
     }
     .user-area {
         display: flex;
         justify-content: flex-end;
+        align-items: center;
         margin-right: 30px;
         li {
+            margin-left: 10px;
             img {
                 width: 20px;
             }
-            margin-left: 10px;
         }
     }
 }
 #wall {
     position: relative;
+    min-height: 700px;
 }

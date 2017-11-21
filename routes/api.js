@@ -8,7 +8,7 @@ var Note = require('../model/note').Note
 // 4. 删除一个note: POST /api/note/delete req: {id: 1}
 /* GET users listing. */
 router.get('/notes', function(req, res, next) {
-  Note.findAll({raw:true}).then(function(notes) {
+  Note.findAll({raw: true}).then(function(notes) {
     res.send({status: 0, data: notes})
   }) 
 });
@@ -16,7 +16,7 @@ router.get('/notes', function(req, res, next) {
 router.post('/notes/add', function(req, res, next) {
   var note = req.body.note
   Note.create({text: note}).then(function() {
-    res.send({status: 0})
+    res.send({status: 0, data: arguments['0'].dataValues})
   }).catch(function() {
     res.send({status: 1, errorMsg: '数据库出错'})
   })

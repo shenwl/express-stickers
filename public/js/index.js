@@ -642,11 +642,8 @@ Note.prototype = {
         this.$note.find('.note-ct').html(this.opts.context)
         this.opts.$ct.append(this.$note)
         if(!this.id) {
-            this.$note.css('bottom', '10px')
+            this.$note.css('top', '10px')
         }
-    },
-    setStyle: function() {
-  
     },
     setLayout: function() {
         var self = this
@@ -659,7 +656,7 @@ Note.prototype = {
     },
     bindEvent: function() {
         var self = this
-        $note = self.$note
+        $note = this.$note
         $noteHead = $note.find('.note-head')
         $noteCt = $note.find('.note-ct')
         $deleteBtn = $note.find('.delete-note')
@@ -687,6 +684,9 @@ Note.prototype = {
 
         //设置note移动
         $noteHead.on('mousedown', function(e) {
+            //bug：没有这行的话拖动永远作用在最后创建的note上
+            $note = $(this).parent('.note')
+
             var evtX = e.pageX - $note.offset().left
             var evtY = e.pageY - $note.offset().top
             $note.addClass('draggable').data('evtPos', {x: evtX, y: evtY})
@@ -708,7 +708,7 @@ Note.prototype = {
             note: msg
         }).done(function(result) {
             if(result.status === 0) {
-                console.log('update success')
+                Toast('编辑成功')
             }else {
                 console.log(result.errorMsg)
             }
@@ -721,7 +721,7 @@ Note.prototype = {
         }).done(function(result) {
             if(result.status === 0) {
                 self.id = result.data.id
-                Toast('add success')
+                Toast('添加成功')
             }else {
                 Toast(result.errorMsg)
             }
@@ -733,7 +733,7 @@ Note.prototype = {
             id: this.id
         }).done(function(result) {
             if(result.status === 0) {
-                Toast('delete success')
+                Toast('删除成功')
                 self.$note.remove()
                 Event.fire('waterfall')
             }else {
@@ -757,6 +757,7 @@ var WaterFall = __webpack_require__(16).WaterFall
 var Toast = __webpack_require__(3).Toast
 var Event = __webpack_require__(4)
 var Note = __webpack_require__(5).Note
+var GoTop = __webpack_require__(17).GoTop
 
 NoteManager.load()
 $('#add-note').on('click', function() {
@@ -766,6 +767,8 @@ $('#add-note').on('click', function() {
 Event.on('waterfall', function() {
     new WaterFall($('#wall'))
 })
+
+var btn = new GoTop($('<div class="gotop"></div>'))
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
@@ -818,7 +821,7 @@ exports = module.exports = __webpack_require__(1)(undefined);
 
 
 // module
-exports.push([module.i, "* {\n  padding: 0;\n  margin: 0;\n  box-sizing: border-box;\n}\nul,\nli {\n  list-style: none;\n}\na {\n  text-decoration: none;\n  color: inherit;\n}\n#header {\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  min-height: 40px;\n  background-color: #ccc;\n  color: #fff;\n}\n#header a {\n  margin-left: 30px;\n}\n#header .user-area {\n  display: flex;\n  justify-content: flex-end;\n  margin-right: 30px;\n}\n#header .user-area li {\n  margin-left: 10px;\n}\n#header .user-area li img {\n  width: 20px;\n}\n#wall {\n  position: relative;\n}\n", ""]);
+exports.push([module.i, "* {\n  padding: 0;\n  margin: 0;\n  box-sizing: border-box;\n}\nul,\nli {\n  list-style: none;\n}\na {\n  text-decoration: none;\n  color: inherit;\n}\na:hover {\n  opacity: 0.5;\n}\n#header {\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  min-height: 40px;\n  background-color: gray;\n  color: #fff;\n}\n#header #add-note {\n  margin-left: 30px;\n}\n#header .user-area {\n  display: flex;\n  justify-content: flex-end;\n  align-items: center;\n  margin-right: 30px;\n}\n#header .user-area li {\n  margin-left: 10px;\n}\n#header .user-area li img {\n  width: 20px;\n}\n#wall {\n  position: relative;\n  min-height: 700px;\n}\n", ""]);
 
 // exports
 
@@ -1046,7 +1049,7 @@ exports = module.exports = __webpack_require__(1)(undefined);
 
 
 // module
-exports.push([module.i, ".note {\n  position: absolute;\n  width: 200px;\n  min-height: 150px;\n  background-color: orange;\n  margin: 10px;\n}\n.note .note-head {\n  height: 30px;\n  background-color: green;\n  padding: 5px;\n}\n.note .note-head .delete-note {\n  cursor: pointer;\n  color: white;\n}\n.note .note-ct {\n  padding: 20px;\n  outline: medium;\n}\n.draggable {\n  opacity: 0.5;\n}\n", ""]);
+exports.push([module.i, ".note {\n  position: absolute;\n  width: 200px;\n  min-height: 150px;\n  background-color: #f7f723;\n  margin: 10px;\n}\n.note .note-head {\n  height: 30px;\n  background-color: #f3961c;\n  padding: 5px;\n}\n.note .note-head .delete-note {\n  cursor: pointer;\n  color: white;\n}\n.note .note-ct {\n  padding: 20px;\n  outline: medium;\n}\n.draggable {\n  opacity: 0.5;\n}\n", ""]);
 
 // exports
 
@@ -1093,6 +1096,99 @@ WaterFall.prototype.putNode = function($node) {
 
 module.exports.WaterFall = WaterFall
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function($) {__webpack_require__(18)
+
+function GoTop($ct) {
+    this.ct = $ct
+    this.target = $('<a class="btn">GoTop</a>')
+    this.createNode()
+    this.bindEvent()
+}
+GoTop.prototype.bindEvent = function () {
+    var ct = this.ct
+    var target = this.target
+    $(window).on('scroll', function () {
+        if ($(window).scrollTop() === 0) {
+            ct.css({
+                opacity: 0
+            })
+        } else {
+            setTimeout(function () {
+                //如果滚到顶部，不会出现
+                if($(window).scrollTop() === 0) return
+                ct.css({
+                    opacity: 1
+                })
+            }, 300)
+        }
+    })
+
+
+    this.target.on('click', function (e) {
+        e.preventDefault()
+        $(window).scrollTop(0)
+        ct.css({
+            opacity: 0
+        })
+    })
+}
+GoTop.prototype.createNode = function () {
+    this.ct.append(this.target)
+    $('body').append(this.ct)
+}
+
+module.exports.GoTop = GoTop
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(19);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {"hmr":true}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(2)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../node_modules/css-loader/index.js!../../node_modules/less-loader/dist/cjs.js!./gotop.less", function() {
+			var newContent = require("!!../../node_modules/css-loader/index.js!../../node_modules/less-loader/dist/cjs.js!./gotop.less");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, ".gotop {\n  position: fixed;\n  right: 10px;\n  bottom: 50px;\n  padding: 5px 8px;\n  background-color: gray;\n  border-radius: 4px;\n}\n.gotop .btn {\n  color: white;\n}\n", ""]);
+
+// exports
+
 
 /***/ })
 /******/ ]);
