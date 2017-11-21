@@ -632,7 +632,7 @@ Note.prototype = {
     },
     createNote: function() {
         var tpl = '<div class="note">' +
-                    '<div class="note-header">' +
+                    '<div class="note-head">' +
                         '<span class="delete-note">X</span>' +
                     '</div>' +
                     '<div class="note-ct" contentEditable="true"></div>' + 
@@ -715,7 +715,6 @@ Note.prototype = {
         }) 
     },
     add: function(msg) {
-        console.log('add...')
         var self = this
         $.post('/api/notes/add', {
             note: msg
@@ -819,7 +818,7 @@ exports = module.exports = __webpack_require__(1)(undefined);
 
 
 // module
-exports.push([module.i, "* {\n  padding: 0;\n  margin: 0;\n  box-sizing: border-box;\n}\nul,\nli {\n  list-style: none;\n}\na {\n  text-decoration: none;\n  color: inherit;\n}\n#header {\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  min-height: 40px;\n  background-color: #ccc;\n  color: #fff;\n}\n#header a {\n  margin-left: 30px;\n}\n#header ul {\n  display: flex;\n  justify-content: flex-end;\n  margin-right: 30px;\n}\n#header ul li {\n  margin-left: 10px;\n}\n#wall {\n  position: relative;\n}\n", ""]);
+exports.push([module.i, "* {\n  padding: 0;\n  margin: 0;\n  box-sizing: border-box;\n}\nul,\nli {\n  list-style: none;\n}\na {\n  text-decoration: none;\n  color: inherit;\n}\n#header {\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  min-height: 40px;\n  background-color: #ccc;\n  color: #fff;\n}\n#header a {\n  margin-left: 30px;\n}\n#header .user-area {\n  display: flex;\n  justify-content: flex-end;\n  margin-right: 30px;\n}\n#header .user-area li {\n  margin-left: 10px;\n}\n#header .user-area li img {\n  width: 20px;\n}\n#wall {\n  position: relative;\n}\n", ""]);
 
 // exports
 
@@ -1047,7 +1046,7 @@ exports = module.exports = __webpack_require__(1)(undefined);
 
 
 // module
-exports.push([module.i, ".note {\n  position: absolute;\n  width: 200px;\n  min-height: 150px;\n  background-color: orange;\n  margin: 10px;\n}\n.note .note-header {\n  height: 30px;\n  background-color: green;\n  padding: 5px;\n}\n.note .note-header .delete-note {\n  cursor: pointer;\n  color: white;\n}\n.note .note-ct {\n  padding: 20px;\n  outline: medium;\n}\n.draggable {\n  opacity: 0.5;\n}\n", ""]);
+exports.push([module.i, ".note {\n  position: absolute;\n  width: 200px;\n  min-height: 150px;\n  background-color: orange;\n  margin: 10px;\n}\n.note .note-head {\n  height: 30px;\n  background-color: green;\n  padding: 5px;\n}\n.note .note-head .delete-note {\n  cursor: pointer;\n  color: white;\n}\n.note .note-ct {\n  padding: 20px;\n  outline: medium;\n}\n.draggable {\n  opacity: 0.5;\n}\n", ""]);
 
 // exports
 

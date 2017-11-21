@@ -1,13 +1,13 @@
 # express-stickers
-在线便利贴应用
+在线便利贴
 
-- Express
+- Node.js, Express
+
+- ejs, less
 
 - webpack, npm scripts
 
-- ejs
-
-- less
-
 - Sequelize, mysql2
+
+- OAuth2.0 , GitHub login
 

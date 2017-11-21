@@ -27,7 +27,7 @@ Note.prototype = {
     },
     createNote: function() {
         var tpl = '<div class="note">' +
-                    '<div class="note-header">' +
+                    '<div class="note-head">' +
                         '<span class="delete-note">X</span>' +
                     '</div>' +
                     '<div class="note-ct" contentEditable="true"></div>' + 
@@ -110,7 +110,6 @@ Note.prototype = {
         }) 
     },
     add: function(msg) {
-        console.log('add...')
         var self = this
         $.post('/api/notes/add', {
             note: msg
