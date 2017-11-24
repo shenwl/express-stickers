@@ -13,7 +13,7 @@ $('#add-note').on('click', function() {
 })
 
 Event.on('waterfall', function() {
-    new WaterFall($('#wall'))
+    new WaterFall($('.note-wall'))
 })
 
 var btn = new GoTop($('<div class="gotop"></div>'))

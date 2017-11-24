@@ -11,11 +11,9 @@ function Note(opts) {
  
 }
 Note.prototype = {
-    //设置不同的noteHead，noteCt颜色
-    colors:{},
     defaultOpts: {
         id: '',
-        $ct: $('#wall').length>0?$('#wall'):$('body'),
+        $ct: $('.note-wall').length>0?$('.note-wall'):$('body'),
         context: '在此输入'
     },
     initOpts: function(opts) {
@@ -28,7 +26,7 @@ Note.prototype = {
     createNote: function() {
         var tpl = '<div class="note">' +
                     '<div class="note-head">' +
-                        '<span class="delete-note">X</span>' +
+                        '<span class="delete-note">x</span>' +
                     '</div>' +
                     '<div class="note-ct" contentEditable="true"></div>' + 
                   '</div>'

@@ -616,11 +616,9 @@ function Note(opts) {
  
 }
 Note.prototype = {
-    //设置不同的noteHead，noteCt颜色
-    colors:{},
     defaultOpts: {
         id: '',
-        $ct: $('#wall').length>0?$('#wall'):$('body'),
+        $ct: $('.note-wall').length>0?$('.note-wall'):$('body'),
         context: '在此输入'
     },
     initOpts: function(opts) {
@@ -633,7 +631,7 @@ Note.prototype = {
     createNote: function() {
         var tpl = '<div class="note">' +
                     '<div class="note-head">' +
-                        '<span class="delete-note">X</span>' +
+                        '<span class="delete-note">x</span>' +
                     '</div>' +
                     '<div class="note-ct" contentEditable="true"></div>' + 
                   '</div>'
@@ -765,7 +763,7 @@ $('#add-note').on('click', function() {
 })
 
 Event.on('waterfall', function() {
-    new WaterFall($('#wall'))
+    new WaterFall($('.note-wall'))
 })
 
 var btn = new GoTop($('<div class="gotop"></div>'))
@@ -821,7 +819,7 @@ exports = module.exports = __webpack_require__(1)(undefined);
 
 
 // module
-exports.push([module.i, "* {\n  padding: 0;\n  margin: 0;\n  box-sizing: border-box;\n}\nul,\nli {\n  list-style: none;\n}\na {\n  text-decoration: none;\n  color: inherit;\n}\na:hover {\n  opacity: 0.5;\n}\n#header {\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  min-height: 40px;\n  background-color: gray;\n  color: #fff;\n}\n#header #add-note {\n  margin-left: 30px;\n}\n#header .user-area {\n  display: flex;\n  justify-content: flex-end;\n  align-items: center;\n  margin-right: 30px;\n}\n#header .user-area li {\n  margin-left: 10px;\n}\n#header .user-area li img {\n  width: 20px;\n}\n#wall {\n  position: relative;\n  min-height: 700px;\n}\n", ""]);
+exports.push([module.i, "* {\n  padding: 0;\n  margin: 0;\n  box-sizing: border-box;\n}\nul,\nli {\n  list-style: none;\n}\na {\n  text-decoration: none;\n  color: inherit;\n}\na:hover {\n  opacity: 0.5;\n}\n#header {\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  height: 40px;\n  background: linear-gradient(to right, gray, silver);\n  color: #fff;\n  z-index: 1;\n}\n#header #add-note {\n  margin-left: 30px;\n}\n#header .user-area {\n  display: flex;\n  justify-content: flex-end;\n  align-items: center;\n  margin-right: 30px;\n}\n#header .user-area li {\n  margin-left: 10px;\n}\n#header .user-area li img {\n  width: 20px;\n}\n#main .note-wall {\n  margin-top: 40px;\n  position: relative;\n  min-height: 736px;\n}\n", ""]);
 
 // exports
 
@@ -1049,7 +1047,7 @@ exports = module.exports = __webpack_require__(1)(undefined);
 
 
 // module
-exports.push([module.i, ".note {\n  position: absolute;\n  width: 200px;\n  min-height: 150px;\n  background-color: #f7f723;\n  margin: 10px;\n}\n.note .note-head {\n  height: 30px;\n  background-color: #f3961c;\n  padding: 5px;\n}\n.note .note-head .delete-note {\n  cursor: pointer;\n  color: white;\n}\n.note .note-ct {\n  padding: 20px;\n  outline: medium;\n}\n.draggable {\n  opacity: 0.5;\n}\n", ""]);
+exports.push([module.i, ".note {\n  position: absolute;\n  width: 200px;\n  min-height: 150px;\n  background: linear-gradient(to bottom, #b3b3b3, #ddd);\n  margin: 10px;\n  box-shadow: 2px 4px 8px 0px #6b6b6b;\n}\n.note .note-head {\n  height: 30px;\n  background-color: gray;\n  padding: 5px;\n}\n.note .note-head .delete-note {\n  cursor: pointer;\n  color: white;\n}\n.note .note-ct {\n  padding: 20px;\n  outline: medium;\n}\n.draggable {\n  opacity: 0.5;\n}\n", ""]);
 
 // exports
 
@@ -1092,6 +1090,7 @@ WaterFall.prototype.putNode = function($node) {
         left: this.nodeWidth * minIndex
     })
     this.colSumHeight[minIndex] += $node.outerHeight(true)
+    this.$ct.height(Math.max.apply(null, this.colSumHeight))
 }
 
 module.exports.WaterFall = WaterFall

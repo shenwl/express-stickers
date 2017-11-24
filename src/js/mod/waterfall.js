@@ -32,6 +32,7 @@ WaterFall.prototype.putNode = function($node) {
         left: this.nodeWidth * minIndex
     })
     this.colSumHeight[minIndex] += $node.outerHeight(true)
+    this.$ct.height(Math.max.apply(null, this.colSumHeight))
 }
 
 module.exports.WaterFall = WaterFall

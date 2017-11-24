@@ -12,6 +12,10 @@ module.exports = {
             {
                 test: /\.less$/,
                 use: ["style-loader", "css-loader", "less-loader"]
+            },
+            {
+                test: /\.(png|jpg|gif)$/,
+                use: ['file-loader']
             }
         ]
     },
@@ -19,7 +23,8 @@ module.exports = {
         alias: {
             jquery: path.resolve(__dirname, 'js/lib/jquery-3.2.1.min.js'),
             mod: path.resolve(__dirname, 'js/mod'),
-            less: path.resolve(__dirname, 'less')
+            less: path.resolve(__dirname, 'less'),
+            img: path.resolve(__dirname, 'img')
         }
     },
     plugins: [

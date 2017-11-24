@@ -11,20 +11,15 @@ var sequelize = new Sequelize(
   operatorsAliases: false
 })
 
+
 var Note = sequelize.define('note', {
   text: {
+    type: Sequelize.STRING
+  },
+  uid: {
     type: Sequelize.STRING
   }
 })
 
-// Note.sync().then(() => {
-//   return Note.create({
-//     text: 'helloworld'
-//   })
-// })
 
-// Note.findAll({raw: true, where: {id: 2}})
-//   .then(function(notes) {
-//     console.log(notes)
-//   })
 module.exports.Note = Note

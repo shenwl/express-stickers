@@ -1,14 +1,27 @@
 # express-stickers
-在线便利贴
+- Node.js, Express搭建在线便利贴
 
-- Node.js, Express
+- 安装依赖
+    ```bash
+    npm install
+    ```
 
-- ejs, less
+- `model/` 目录添加config.js文件，添加数据库配置
+    ```js
+    //配置案例
+    var config = {
+        DB_NAME: 'db_name   ',
+        USERNAME: 'root',
+        PASSWORD: 'xxxxxxxx'
+    }
+    module.exports = config
+    ```
+
+
+- npm start [打开localhost:3000]
 
 - webpack打包
 
-- npm scripts自动化
+- Sequelize, mysql2
 
-- Sequelize, mysql2操作数据库
-
-- OAuth2.0, passport, passport-github实现GitHub登录
+- OAuth2.0, passport, passport-github登录
